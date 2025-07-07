@@ -1,108 +1,233 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>IND vs AUS Scoreboard</title>
+  <meta charset="UTF-8" />
+  <title>IND vs AUS - Advanced Cricket Scoreboard</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #090909, #f3f4f5);
       font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #fff;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       min-height: 100vh;
     }
 
-    .scoreboard {
-      background: #ffffff;
-      color: #333;
-      width: 400px;
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    .dashboard {
+      background: rgba(255,255,255,0.95);
+      color: #2c3e50;
+      width: 900px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      padding: 20px;
+      position: relative;
       overflow: hidden;
-      animation: fadeIn 1s ease-in-out;
     }
 
     .header {
-      background: linear-gradient(90deg, #ff512f, #dd2476);
-      padding: 20px;
+      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+      padding: 16px;
+      border-radius: 12px;
       text-align: center;
+      margin-bottom: 15px;
     }
 
     .header h1 {
+      color: white;
       margin: 0;
-      font-size: 24px;
-      color: #fff;
+      font-size: 28px;
+      letter-spacing: 1px;
     }
 
-    .summary {
-      padding: 15px;
+    .umpires {
       text-align: center;
-      font-size: 18px;
-      background: #f7f7f7;
+      margin-bottom: 15px;
       font-weight: bold;
-      color: #34495e;
     }
 
-    .players {
-      padding: 20px;
-    }
-
-    .player {
+    .info-section {
       display: flex;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
-      transition: background 0.3s;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: space-around;
+      margin-bottom: 20px;
     }
 
-    .player:hover {
-      background: #f0f0f0;
+    .info-box {
+      background: #ecf0f1;
+      padding: 14px;
+      border-left: 5px solid #2980b9;
+      border-radius: 8px;
+      min-width: 160px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
-    .player-name {
-      font-weight: 600;
+    table {
+      width: 100%;
+      background: white;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: #2980b9;
+      color: white;
     }
 
     .highlight {
       color: #e74c3c;
-      font-size: 16px;
+      font-weight: bold;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    .footer {
+      text-align: center;
+      font-size: 16px;
+      color: #34495e;
+    }
+
+    .ticker {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: #e74c3c;
+      color: white;
+      padding: 8px 0;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: tickerMove 15s linear infinite;
+    }
+
+    @keyframes tickerMove {
+      from { transform: translateX(0%); }
+      to { transform: translateX(-100%); }
     }
   </style>
 </head>
 <body>
-
-  <div class="scoreboard">
+  <div class="dashboard">
     <div class="header">
-      <h1>IND vs AUS - Live Score</h1>
+      <h1>IND vs AUS - Live Cricket Scoreboard</h1>
     </div>
-    <div class="summary">
-      Target: 250 | India: 160/2
+
+    <div class="umpires">Umpires: Aleem Dar & Kumar Dharmasena</div>
+
+    <div class="info-section">
+      <div class="info-box" id="scoreBox">Score: 160/2</div>
+      <div class="info-box" id="oversBox">Overs: 25.0</div>
+      <div class="info-box" id="ballsBox">Balls Left: 150</div>
+      <div class="info-box" id="battingBox">Striker: Virat Kohli</div>
+      <div class="info-box" id="bowlingBox">Bowler: Pat Cummins</div>
     </div>
-    <div class="players">
-      <div class="player">
-        <div class="player-name highlight">Virat Kohli</div>
-        <div class="score">90</div>
-      </div>
-      <div class="player">
-        <div class="player-name">Krunal Pandya</div>
-        <div class="score">30</div>
-      </div>
-      <div class="player">
-        <div class="player-name">MS Dhoni</div>
-        <div class="score">15</div>
-      </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Runs</th>
+          <th>Balls</th>
+          <th>Strike Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="highlight">Virat Kohli</td>
+          <td id="kohliRuns">90</td>
+          <td id="kohliBalls">55</td>
+          <td id="kohliSR">163.6</td>
+        </tr>
+        <tr>
+          <td>Krunal Pandya</td>
+          <td id="pandyaRuns">30</td>
+          <td id="pandyaBalls">28</td>
+          <td id="pandyaSR">107.1</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="footer" id="timeDisplay">Time: --:--:--</div>
+
+    <div class="ticker">
+      <div class="ticker-text">🏏 World Cup Live is going on — Stay tuned for all the action! 🏆</div>
     </div>
   </div>
 
+  <script>
+    let kohliRuns = 90, kohliBalls = 55;
+    let pandyaRuns = 30, pandyaBalls = 28;
+    let totalRuns = 160, wickets = 2, ballsRemaining = 150;
+    let striker = "Virat Kohli", nonStriker = "Krunal Pandya";
+    let bowler = "Pat Cummins";
+    let totalBalls = 150, ballsDelivered = 0;
+
+    function updateTime() {
+      const now = new Date();
+      document.getElementById("timeDisplay").textContent = "Time: " + now.toLocaleTimeString();
+    }
+
+    function updateDashboard() {
+      const isWide = Math.random() < 0.1;
+      const runs = isWide ? 1 : Math.floor(Math.random() * 7);
+      const swapStrike = Math.random() > 0.8;
+
+      if (striker === "Virat Kohli") {
+        kohliRuns += runs;
+        if (!isWide) kohliBalls++;
+      } else {
+        pandyaRuns += runs;
+        if (!isWide) pandyaBalls++;
+      }
+
+      totalRuns += runs;
+
+      if (!isWide) {
+        ballsRemaining--;
+        ballsDelivered++;
+      }
+
+      if (swapStrike && !isWide) {
+        [striker, nonStriker] = [nonStriker, striker];
+      }
+
+      if (ballsDelivered % 6 === 0 && ballsDelivered !== 0 && !isWide) {
+        const bowlers = ["Pat Cummins", "Josh Hazlewood", "Mitchell Starc", "Zampa"];
+        bowler = bowlers[Math.floor(Math.random() * bowlers.length)];
+      }
+
+      document.getElementById("kohliRuns").textContent = kohliRuns;
+      document.getElementById("kohliBalls").textContent = kohliBalls;
+      document.getElementById("pandyaRuns").textContent = pandyaRuns;
+      document.getElementById("pandyaBalls").textContent = pandyaBalls;
+
+      document.getElementById("kohliSR").textContent = ((kohliRuns / kohliBalls) * 100).toFixed(1);
+      document.getElementById("pandyaSR").textContent = ((pandyaRuns / pandyaBalls) * 100).toFixed(1);
+
+      document.getElementById("scoreBox").textContent = "Score: " + totalRuns + "/" + wickets;
+      document.getElementById("oversBox").textContent = "Overs: " + ((totalBalls - ballsRemaining) / 6).toFixed(1);
+      document.getElementById("ballsBox").textContent = "Balls Left: " + ballsRemaining;
+      document.getElementById("battingBox").textContent = "Striker: " + striker;
+      document.getElementById("bowlingBox").textContent = "Bowler: " + bowler;
+    }
+
+    setInterval(updateTime, 1000);
+    setInterval(updateDashboard, 10000);
+  </script>
 </body>
 </html>
